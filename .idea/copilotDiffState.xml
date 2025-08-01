@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/DYX-app/src/main/java/com/Zjj/config/RedissonConfig.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/DYX-app/src/main/java/com/Zjj/config/RedissonConfig.java" />
+              <option name="updatedContent" value="package com.Zjj.config;&#10;&#10;import org.redisson.Redisson;&#10;import org.redisson.api.RedissonClient;&#10;import org.redisson.config.Config;&#10;import org.springframework.beans.factory.annotation.Value;&#10;import org.springframework.context.annotation.Bean;&#10;import org.springframework.context.annotation.Configuration;&#10;&#10;/**&#10; * Redisson配置类&#10; */&#10;@Configuration&#10;public class RedissonConfig {&#10;&#10;    @Value(&quot;${spring.redis.host:localhost}&quot;)&#10;    private String redisHost;&#10;&#10;    @Value(&quot;${spring.redis.port:6379}&quot;)&#10;    private Integer redisPort;&#10;&#10;    @Value(&quot;${spring.redis.password:}&quot;)&#10;    private String redisPassword;&#10;&#10;    @Value(&quot;${spring.redis.database:0}&quot;)&#10;    private Integer database;&#10;&#10;    @Value(&quot;${spring.redis.timeout:3000}&quot;)&#10;    private Integer timeout;&#10;&#10;    @Bean&#10;    public RedissonClient redissonClient() {&#10;        Config config = new Config();&#10;        &#10;        // 配置单节点Redis&#10;        String redisUrl = String.format(&quot;redis://%s:%d&quot;, redisHost, redisPort);&#10;        config.useSingleServer()&#10;                .setAddress(redisUrl)&#10;                .setDatabase(database)&#10;                .setTimeout(timeout)&#10;                .setConnectionMinimumIdleSize(10)&#10;                .setConnectionPoolSize(64)&#10;                .setIdleConnectionTimeout(10000)&#10;                .setConnectTimeout(10000)&#10;                .setRetryAttempts(3)&#10;                .setRetryInterval(1500)&#10;                .setPingConnectionInterval(0)&#10;                .setKeepAlive(true);&#10;&#10;        // 如果有密码则设置密码&#10;        if (redisPassword != null &amp;&amp; !redisPassword.trim().isEmpty()) {&#10;            config.useSingleServer().setPassword(redisPassword);&#10;        }&#10;&#10;        return Redisson.create(config);&#10;    }&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

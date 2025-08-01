@@ -91,6 +91,11 @@
                 <version>32.1.3-jre</version>
             </dependency>
             <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>3.27.1</version> <!-- 这是一个与Redis 6.0兼容的较新稳定版本 -->
+            </dependency>
+            <dependency>
                 <groupId>dom4j</groupId>
                 <artifactId>dom4j</artifactId>
                 <version>1.6.1</version>

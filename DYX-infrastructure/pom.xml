@@ -19,6 +19,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
+            <version>3.27.1</version> <!-- 这是一个与Redis 6.0兼容的较新稳定版本 -->
+        </dependency>
 
         <!-- 系统模块 -->
         <dependency>
