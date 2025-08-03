@@ -3,6 +3,7 @@ package com.Zjj.infrastructure.repository;
 import com.Zjj.domain.strategy.model.entity.StrategyAwardEntity;
 import com.Zjj.domain.strategy.model.entity.StrategyEntity;
 import com.Zjj.domain.strategy.model.entity.StrategyRuleEntity;
+import com.Zjj.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 import com.Zjj.domain.strategy.repository.IStrategyRepository;
 import com.Zjj.infrastructure.persistence.dao.IStrategyAwardDao;
 import com.Zjj.infrastructure.persistence.dao.IStrategyDao;
@@ -13,11 +14,15 @@ import com.Zjj.infrastructure.persistence.po.StrategyRule;
 import com.Zjj.infrastructure.redis.IRedisService;
 import com.Zjj.types.common.Constants;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
+@Repository
 public class StrategyRepository implements IStrategyRepository {
     @Resource
     private IStrategyDao strategyDao;
@@ -105,6 +110,26 @@ public class StrategyRepository implements IStrategyRepository {
                 .ruleValue(strategyRuleRes.getRuleValue())
                 .ruleDesc(strategyRuleRes.getRuleDesc())
                 .build();
+    }
+
+    @Override
+    public String queryStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel) {
+        StrategyRule strategyRule = new StrategyRule();
+        strategyRule.setStrategyId(strategyId);
+        strategyRule.setAwardId(awardId);
+        strategyRule.setRuleModel(ruleModel);
+        return strategyRuleDao.queryStrategyRuleValue(strategyRule);
+    }
+
+    @Override
+    public String queryStrategyRuleValue(Long strategyId, String ruleModel) {
+
+        return queryStrategyRuleValue(strategyId, null, ruleModel);
+    }
+
+    @Override
+    public StrategyAwardRuleModelVO queryStrategyAwardRuleModelVO(Long strategyId, Integer awardId) {
+        return null;
     }
 
 

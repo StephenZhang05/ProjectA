@@ -1,4 +1,4 @@
-package com.Zjj.domain.strategy.service;
+package com.Zjj.domain.strategy.service.strategy;
 
 public interface IStrategyAmory {
     boolean assembleLotteryStrategy(Long strategyId);

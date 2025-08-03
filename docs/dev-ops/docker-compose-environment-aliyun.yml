@@ -3,13 +3,13 @@
 version: '3.9'
 services:
   mysql:
-    image: registry.cn-hangzhou.aliyuncs.com/xfg-studio/mysql:8.0.32
+    image: registry.cn-hangzhou.aliyuncs.com/zjj/mysql:8.0.32
     container_name: mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       TZ: Asia/Shanghai
-      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_ROOT_PASSWORD: 724083800
     ports:
       - "13306:3306"
     volumes:
@@ -43,7 +43,7 @@ services:
 
   # Redis
   redis:
-    image: registry.cn-hangzhou.aliyuncs.com/xfg-studio/redis:6.2
+    image: registry.cn-hangzhou.aliyuncs.com/zjj/redis:6.2
     container_name: redis
     restart: always
     hostname: redis
@@ -64,7 +64,7 @@ services:
   # RedisAdmin https://github.com/joeferner/redis-commander
   # 账密 admin/admin
   redis-admin:
-    image: registry.cn-hangzhou.aliyuncs.com/xfg-studio/redis-commander:0.8.0
+    image: registry.cn-hangzhou.aliyuncs.com/zjj/redis-commander:0.8.0
     container_name: redis-admin
     hostname: redis-commander
     restart: always
