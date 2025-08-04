@@ -2,6 +2,7 @@ package com.Zjj.domain.strategy.service.rule.chain.impl;
 
 import com.Zjj.domain.strategy.repository.IStrategyRepository;
 import com.Zjj.domain.strategy.service.rule.chain.AbstractLogicChain;
+import com.Zjj.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
 import com.Zjj.domain.strategy.service.strategy.IStrategyDispatch;
 import com.Zjj.types.common.Constants;
 import jakarta.annotation.Resource;
@@ -30,7 +31,7 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
      * 2. 解析数据格式；判断哪个范围符合用户的特定抽奖范围
      */
     @Override
-    public Integer logic(String userId, Long strategyId) {
+    public DefaultChainFactory.StrategyAwardVO logic(String userId, Long strategyId) {
         log.info("抽奖责任链-权重开始 userId: {} strategyId: {} ruleModel: {}", userId, strategyId, ruleModel());
 
         String ruleValue = repository.queryStrategyRuleValue(strategyId, ruleModel());
@@ -67,7 +68,11 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
         if (null != nextValue) {
             Integer awardId = strategyDispatch.getRandomAwardId(strategyId, analyticalValueGroup.get(nextValue));
             log.info("抽奖责任链-权重接管 userId: {} strategyId: {} ruleModel: {} awardId: {}", userId, strategyId, ruleModel(), awardId);
-            return awardId;
+            return DefaultChainFactory.StrategyAwardVO.builder()
+                    .awardId(awardId)
+                    .logicModel(ruleModel())
+                    .build();
+
         }
 
         // 5. 过滤其他责任链
@@ -96,6 +101,7 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
 
     @Override
     protected String ruleModel() {
-        return "rule_Weight";
+        return DefaultChainFactory.LogicModel.RULE_WEIGHT.getCode();
     }
+
 }

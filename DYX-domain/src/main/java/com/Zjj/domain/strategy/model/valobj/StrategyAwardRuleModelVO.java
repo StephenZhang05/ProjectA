@@ -1,6 +1,5 @@
 package com.Zjj.domain.strategy.model.valobj;
 
-import com.Zjj.domain.strategy.service.rule.FILTER.factory.DefaultLogicFactory;
 import com.Zjj.types.common.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
