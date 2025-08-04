@@ -3,6 +3,7 @@ package com.Zjj.domain.strategy.service.raffle;
 import com.Zjj.domain.strategy.model.entity.RaffleAwardEntity;
 import com.Zjj.domain.strategy.model.entity.RaffleFactorEntity;
 import com.Zjj.domain.strategy.repository.IStrategyRepository;
+import com.Zjj.domain.strategy.service.IRaffleStock;
 import com.Zjj.domain.strategy.service.IRaffleStrategy;
 import com.Zjj.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
 import com.Zjj.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
@@ -14,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 
-public abstract class  AbstractRaffleStrategy implements IRaffleStrategy {
+public abstract class  AbstractRaffleStrategy implements IRaffleStrategy, IRaffleStock {
     // 策略仓储服务 -> domain层像一个大厨，仓储层提供米面粮油
     protected IStrategyRepository repository;
     // 策略调度服务 -> 只负责抽奖处理，通过新增接口的方式，隔离职责，不需要使用方关心或者调用抽奖的初始化

@@ -4,6 +4,7 @@ import com.Zjj.domain.strategy.model.entity.StrategyAwardEntity;
 import com.Zjj.domain.strategy.model.entity.StrategyEntity;
 import com.Zjj.domain.strategy.model.entity.StrategyRuleEntity;
 import com.Zjj.domain.strategy.repository.IStrategyRepository;
+import com.Zjj.types.common.Constants;
 import com.Zjj.types.enums.ResponseCode;
 import com.Zjj.types.exception.AppException;
 import jakarta.annotation.Resource;
@@ -30,6 +31,12 @@ public class StrategyArmoryDispatch implements IStrategyAmory, IStrategyDispatch
     public boolean assembleLotteryStrategy(Long strategyId) {
         // 1. 查询策略配置
         List<StrategyAwardEntity> strategyAwardEntities = repository.queryStrategyAwardList(strategyId);
+
+        for(StrategyAwardEntity strategyAwardEntity : strategyAwardEntities) {
+            Integer awardId = strategyAwardEntity.getAwardId();
+            Integer awardCount = strategyAwardEntity.getAwardCount();
+            cacheStrategyAwardCount(strategyId, awardId, awardCount);
+        }
         assembleLotteryStrategy(String.valueOf(strategyId), strategyAwardEntities);
 
         // 2. 权重策略配置 - 适用于 rule_weight 权重规则配置
@@ -50,6 +57,11 @@ public class StrategyArmoryDispatch implements IStrategyAmory, IStrategyDispatch
         }
 
         return true;
+    }
+
+    private void cacheStrategyAwardCount(Long strategyId, Integer awardId, Integer awardCount) {
+        String strategyAwardCountKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_KEY+Constants.UNDERLINE+awardCount;
+        repository.cacheStrategyAwardCount(strategyAwardCountKey,awardCount);
     }
 
     /**
@@ -128,6 +140,11 @@ public class StrategyArmoryDispatch implements IStrategyAmory, IStrategyDispatch
         return repository.getStrategyAwardAssemble(key, new SecureRandom().nextInt(rateRange));
     }
 
+    @Override
+    public Boolean subStock(Long strategyId, Integer awardId) {
+        String cacheKey=Constants.RedisKey.STRATEGY_AWARD_COUNT_KEY+ Constants.UNDERLINE + strategyId + Constants.UNDERLINE + awardId;
+        return repository.subStock(cacheKey);
+    }
 
 
 }

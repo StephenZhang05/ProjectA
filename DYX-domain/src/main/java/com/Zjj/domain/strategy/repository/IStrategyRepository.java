@@ -5,6 +5,7 @@ import com.Zjj.domain.strategy.model.entity.StrategyEntity;
 import com.Zjj.domain.strategy.model.entity.StrategyRuleEntity;
 import com.Zjj.domain.strategy.model.valobj.RuleTreeVO;
 import com.Zjj.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
+import com.Zjj.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -40,4 +41,13 @@ public interface IStrategyRepository {
      */
     RuleTreeVO queryRuleTreeVOByTreeId(String treeId);
 
+    void cacheStrategyAwardCount(String strategyAwardCountKey, Integer awardCount);
+
+    Boolean subStock(String cacheKey);
+
+    void sendQueue(StrategyAwardStockKeyVO build);
+
+    StrategyAwardStockKeyVO takeQueueValue();
+
+    void updateStrategyAwardStock(Long strategyId, Integer awardId);
 }

@@ -2,6 +2,7 @@ package com.Zjj.domain.strategy.service.raffle;
 
 import com.Zjj.domain.strategy.model.valobj.RuleTreeVO;
 import com.Zjj.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
+import com.Zjj.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import com.Zjj.domain.strategy.repository.IStrategyRepository;
 import com.Zjj.domain.strategy.service.rule.chain.ILogicChain;
 import com.Zjj.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
@@ -38,5 +39,13 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy{
     }
 
 
+    @Override
+    public StrategyAwardStockKeyVO takeQueueValue() throws InterruptedException {
+        return repository.takeQueueValue();
+    }
 
+    @Override
+    public void updateStrategyAwardStock(Long strategyId, Integer awardId) {
+        repository.updateStrategyAwardStock(strategyId, awardId);
+    }
 }
