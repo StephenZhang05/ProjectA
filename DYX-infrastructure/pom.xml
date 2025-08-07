@@ -30,6 +30,10 @@
             <groupId>com.Zjj</groupId>
             <artifactId>DYX-domain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.xmlunit</groupId>
+            <artifactId>xmlunit-core</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

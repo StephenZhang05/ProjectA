@@ -14,18 +14,17 @@ import java.util.Map;
 
 @Slf4j
 public class DecisionTreeEngine implements IDecisionTreeEngine{
-     @Resource
-     private final Map<String, ILogicTreeNode> logicTreeNodeGroup;
-     private final RuleTreeVO ruleTreeVO;
+    private final Map<String, ILogicTreeNode> logicTreeNodeGroup;
 
-    public DecisionTreeEngine(Map<String, ILogicTreeNode>logicTreeNodeGroup, RuleTreeVO ruleTreeVO) {
-        this.ruleTreeVO = ruleTreeVO;
+    private final RuleTreeVO ruleTreeVO;
+
+    public DecisionTreeEngine(Map<String, ILogicTreeNode> logicTreeNodeGroup, RuleTreeVO ruleTreeVO) {
         this.logicTreeNodeGroup = logicTreeNodeGroup;
+        this.ruleTreeVO = ruleTreeVO;
     }
 
     @Override
     public DefaultTreeFactory.StrategyAwardVO process(String userId, Long strategyId, Integer awardId) {
-      //获取基本信息
         DefaultTreeFactory.StrategyAwardVO strategyAwardData = null;
 
         // 获取基础信息
@@ -37,7 +36,8 @@ public class DecisionTreeEngine implements IDecisionTreeEngine{
         while (null != nextNode) {
             // 获取决策节点
             ILogicTreeNode logicTreeNode = logicTreeNodeGroup.get(ruleTreeNode.getRuleKey());
-            String ruleValue=ruleTreeNode.getRuleValue();
+            String ruleValue = ruleTreeNode.getRuleValue();
+
             // 决策节点计算
             DefaultTreeFactory.TreeActionEntity logicEntity = logicTreeNode.logic(userId, strategyId, awardId, ruleValue);
             RuleLogicCheckTypeVO ruleLogicCheckTypeVO = logicEntity.getRuleLogicCheckType();
@@ -51,8 +51,8 @@ public class DecisionTreeEngine implements IDecisionTreeEngine{
 
         // 返回最终结果
         return strategyAwardData;
-
     }
+
     public String nextNode(String matterValue, List<RuleTreeNodeLineVO> treeNodeLineVOList) {
         if (null == treeNodeLineVOList || treeNodeLineVOList.isEmpty()) return null;
         for (RuleTreeNodeLineVO nodeLine : treeNodeLineVOList) {
@@ -60,7 +60,7 @@ public class DecisionTreeEngine implements IDecisionTreeEngine{
                 return nodeLine.getRuleNodeTo();
             }
         }
-        throw new RuntimeException("决策树引擎，nextNode 计算失败，未找到可执行节点！");
+        return null;
     }
 
     public boolean decisionLogic(String matterValue, RuleTreeNodeLineVO nodeLine) {
@@ -76,5 +76,6 @@ public class DecisionTreeEngine implements IDecisionTreeEngine{
                 return false;
         }
     }
+
 
 }

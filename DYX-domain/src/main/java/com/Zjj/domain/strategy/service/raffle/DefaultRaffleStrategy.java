@@ -1,18 +1,24 @@
 package com.Zjj.domain.strategy.service.raffle;
 
+import com.Zjj.domain.strategy.model.entity.StrategyAwardEntity;
 import com.Zjj.domain.strategy.model.valobj.RuleTreeVO;
 import com.Zjj.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 import com.Zjj.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import com.Zjj.domain.strategy.repository.IStrategyRepository;
+import com.Zjj.domain.strategy.service.IRaffleAward;
 import com.Zjj.domain.strategy.service.rule.chain.ILogicChain;
 import com.Zjj.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
 import com.Zjj.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
 import com.Zjj.domain.strategy.service.rule.tree.factory.engine.IDecisionTreeEngine;
 import com.Zjj.domain.strategy.service.strategy.IStrategyDispatch;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
-public class DefaultRaffleStrategy extends AbstractRaffleStrategy{
+@Service
+public class DefaultRaffleStrategy extends AbstractRaffleStrategy implements IRaffleAward {
 
     public DefaultRaffleStrategy(IStrategyRepository repository, IStrategyDispatch strategyDispatch, DefaultChainFactory defaultChainFactory, DefaultTreeFactory defaultTreeFactory) {
         super(repository, strategyDispatch, defaultChainFactory, defaultTreeFactory);
@@ -38,7 +44,6 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy{
         return treeEngine.process(userId, strategyId, awardId);
     }
 
-
     @Override
     public StrategyAwardStockKeyVO takeQueueValue() throws InterruptedException {
         return repository.takeQueueValue();
@@ -48,4 +53,11 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy{
     public void updateStrategyAwardStock(Long strategyId, Integer awardId) {
         repository.updateStrategyAwardStock(strategyId, awardId);
     }
+
+    @Override
+    public List<StrategyAwardEntity> queryRaffleStrategyAwardList(Long strategyId) {
+        return repository.queryStrategyAwardList(strategyId);
+    }
+
+
 }
