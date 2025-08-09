@@ -13,7 +13,7 @@ private IActivityRepository activityRepository;
     @Override
     public Boolean assembleActivitySku(Long sku) {
         ActivitySkuEntity activitySkuEntity=activityRepository.queryActivitySku(sku);
-        cacheActivitySkuCount(sku,activitySkuEntity.getStockCount());
+        cacheActivitySkuStockCount(sku,activitySkuEntity.getStockCount());
         // 预热活动【查询时预热到缓存】
         activityRepository.queryRaffleActivityByActivityId(activitySkuEntity.getActivityId());
 
@@ -24,9 +24,9 @@ private IActivityRepository activityRepository;
         return true;
     }
 
-    private void cacheActivitySkuCount(Long sku, Integer stockCount) {
+    private void cacheActivitySkuStockCount(Long sku, Integer stockCount) {
         String cacheKey = Constants.RedisKey.ACTIVITY_SKU_STOCK_COUNT_KEY + sku;
-        activityRepository.cacheActivitySkuCount(cacheKey, stockCount);
+        activityRepository.cacheActivitySkuStockCount(cacheKey, stockCount);
     }
     @Override
     public boolean subtractionActivitySkuStock(Long sku, Date endDateTime) {
