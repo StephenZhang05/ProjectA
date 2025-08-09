@@ -1,10 +1,10 @@
-package com.Zjj.domain.activity.service.rule.impl;
+package com.Zjj.domain.activity.service.quota.rule.impl;
 
 import com.Zjj.domain.activity.model.entity.ActivityCountEntity;
 import com.Zjj.domain.activity.model.entity.ActivityEntity;
 import com.Zjj.domain.activity.model.entity.ActivitySkuEntity;
 import com.Zjj.domain.activity.model.valobj.ActivityStateVO;
-import com.Zjj.domain.activity.service.rule.AbstractActionChain;
+import com.Zjj.domain.activity.service.quota.rule.AbstractActionChain;
 import com.Zjj.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

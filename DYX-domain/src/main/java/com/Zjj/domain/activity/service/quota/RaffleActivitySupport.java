@@ -1,10 +1,10 @@
-package com.Zjj.domain.activity.service;
+package com.Zjj.domain.activity.service.quota;
 
 import com.Zjj.domain.activity.model.entity.ActivityCountEntity;
 import com.Zjj.domain.activity.model.entity.ActivityEntity;
 import com.Zjj.domain.activity.model.entity.ActivitySkuEntity;
 import com.Zjj.domain.activity.repository.IActivityRepository;
-import com.Zjj.domain.activity.service.rule.factory.DefaultActivityChainFactory;
+import com.Zjj.domain.activity.service.quota.rule.factory.DefaultActivityChainFactory;
 
 public class RaffleActivitySupport {
 

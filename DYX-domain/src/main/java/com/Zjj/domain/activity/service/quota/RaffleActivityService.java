@@ -1,11 +1,12 @@
-package com.Zjj.domain.activity.service;
+package com.Zjj.domain.activity.service.quota;
 
-import com.Zjj.domain.activity.model.aggregate.CreateOrderAggregate;
+import com.Zjj.domain.activity.model.aggregate.CreateQuotaOrderAggregate;
 import com.Zjj.domain.activity.model.entity.*;
 import com.Zjj.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 import com.Zjj.domain.activity.model.valobj.OrderStateVO;
 import com.Zjj.domain.activity.repository.IActivityRepository;
-import com.Zjj.domain.activity.service.rule.factory.DefaultActivityChainFactory;
+import com.Zjj.domain.activity.service.ISkuStock;
+import com.Zjj.domain.activity.service.quota.rule.factory.DefaultActivityChainFactory;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.Date;
@@ -17,7 +18,7 @@ public class RaffleActivityService extends AbstractRaffleActivity implements ISk
     }
 
     @Override
-    protected CreateOrderAggregate buildOrderAggregate(SkuRechargeEntity skuRechargeEntity, ActivitySkuEntity activitySkuEntity, ActivityEntity activityEntity, ActivityCountEntity activityCountEntity) {
+    protected CreateQuotaOrderAggregate buildOrderAggregate(SkuRechargeEntity skuRechargeEntity, ActivitySkuEntity activitySkuEntity, ActivityEntity activityEntity, ActivityCountEntity activityCountEntity) {
         // 订单实体对象
         ActivityOrderEntity activityOrderEntity = new ActivityOrderEntity();
         activityOrderEntity.setUserId(skuRechargeEntity.getUserId());
@@ -35,7 +36,7 @@ public class RaffleActivityService extends AbstractRaffleActivity implements ISk
         activityOrderEntity.setOutBusinessNo(skuRechargeEntity.getOutBusinessNo());
 
         // 构建聚合对象
-        return CreateOrderAggregate.builder()
+        return CreateQuotaOrderAggregate.builder()
                 .userId(skuRechargeEntity.getUserId())
                 .activityId(activitySkuEntity.getActivityId())
                 .totalCount(activityCountEntity.getTotalCount())
@@ -46,8 +47,8 @@ public class RaffleActivityService extends AbstractRaffleActivity implements ISk
     }
 
     @Override
-    protected void doSaveOrder(CreateOrderAggregate createOrderAggregate) {
-        activityRepository.doSaveOrder(createOrderAggregate);
+    protected void doSaveOrder(CreateQuotaOrderAggregate createQuotaOrderAggregate) {
+        activityRepository.doSaveOrder(createQuotaOrderAggregate);
     }
     @Override
     public ActivitySkuStockKeyVO takeQueueValue() throws InterruptedException {

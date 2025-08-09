@@ -1,4 +1,4 @@
-package com.Zjj.domain.activity.service.rule.impl;
+package com.Zjj.domain.activity.service.quota.rule.impl;
 
 import com.Zjj.domain.activity.model.entity.ActivityCountEntity;
 import com.Zjj.domain.activity.model.entity.ActivityEntity;
@@ -6,7 +6,7 @@ import com.Zjj.domain.activity.model.entity.ActivitySkuEntity;
 import com.Zjj.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 import com.Zjj.domain.activity.repository.IActivityRepository;
 import com.Zjj.domain.activity.service.armory.IActivityDispatch;
-import com.Zjj.domain.activity.service.rule.AbstractActionChain;
+import com.Zjj.domain.activity.service.quota.rule.AbstractActionChain;
 import com.Zjj.types.enums.ResponseCode;
 import com.Zjj.types.exception.AppException;
 import jakarta.annotation.Resource;

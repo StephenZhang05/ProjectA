@@ -1,4 +1,4 @@
-package com.Zjj.domain.activity.service.rule;
+package com.Zjj.domain.activity.service.quota.rule;
 
 import com.Zjj.domain.activity.model.entity.ActivityCountEntity;
 import com.Zjj.domain.activity.model.entity.ActivityEntity;
