@@ -24,7 +24,11 @@
             <artifactId>redisson-spring-boot-starter</artifactId>
             <version>3.27.1</version> <!-- 这是一个与Redis 6.0兼容的较新稳定版本 -->
         </dependency>
-
+        <dependency>
+            <groupId>cn.bugstack.middleware</groupId>
+            <artifactId>db-router-spring-boot-starter</artifactId>
+            <version>1.0.4</version>
+        </dependency>
         <!-- 系统模块 -->
         <dependency>
             <groupId>com.Zjj</groupId>
@@ -33,6 +37,11 @@
         <dependency>
             <groupId>org.xmlunit</groupId>
             <artifactId>xmlunit-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit</artifactId>
+            <version>3.0.3</version>
         </dependency>
     </dependencies>
 
