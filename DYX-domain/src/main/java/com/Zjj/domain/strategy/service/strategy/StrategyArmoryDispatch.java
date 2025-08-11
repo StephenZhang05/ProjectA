@@ -145,6 +145,11 @@ public class StrategyArmoryDispatch implements IStrategyAmory, IStrategyDispatch
         String cacheKey=Constants.RedisKey.STRATEGY_AWARD_COUNT_KEY+ Constants.UNDERLINE + strategyId + Constants.UNDERLINE + awardId;
         return repository.subStock(cacheKey);
     }
+    @Override
+    public boolean assembleLotteryStrategyByActivityId(Long activityId) {
+        Long strategyId = repository.queryStrategyIdByActivityId(activityId);
+        return assembleLotteryStrategy(strategyId);
+    }
 
 
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.checkerframework.checker.units.qual.A;
 import org.checkerframework.checker.units.qual.N;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 @Data
 @AllArgsConstructor
@@ -14,7 +15,11 @@ import java.util.Date;
 @Builder
 public class RaffleActivityAccountDay {
 
-    /** 自增ID */
+    private final SimpleDateFormat dateFormatDay = new SimpleDateFormat("yyyy-MM-dd");
+    /**
+     * 自增ID
+     */
+
     private String id;
     /** 用户ID */
     private String userId;
@@ -30,5 +35,8 @@ public class RaffleActivityAccountDay {
     private Date createTime;
     /** 更新时间 */
     private Date updateTime;
+    public String currentDay() {
+        return dateFormatDay.format(new Date());
+    }
 
 }

@@ -1,6 +1,6 @@
 package com.Zjj.trigger.http;
 
-import com.Zjj.api.IRaffleService;
+import com.Zjj.api.IRaffleStrategyService;
 import com.Zjj.api.dto.RaffleAwardListRequestDTO;
 import com.Zjj.api.dto.RaffleAwardResponseDTO;
 import com.Zjj.api.dto.RaffleRequestDTO;
@@ -29,8 +29,8 @@ import java.util.List;
 @Slf4j
 @RestController()
 @CrossOrigin("${app.config.cross-origin}")
-@RequestMapping("/api/${app.config.api-version}/raffle/")
-public class RaffleService implements IRaffleService {
+@RequestMapping("/api/${app.config.api-version}/raffle/strategy/")
+public class RaffleService implements IRaffleStrategyService {
 
     @Resource
     private IRaffleAward raffleAward;

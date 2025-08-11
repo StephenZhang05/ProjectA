@@ -1,7 +1,12 @@
 package com.Zjj.infrastructure.persistence.po;
 
-import java.util.Date;
+import lombok.*;
 
+import java.util.Date;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class UserAwardRecord {
 
     /** 自增ID */

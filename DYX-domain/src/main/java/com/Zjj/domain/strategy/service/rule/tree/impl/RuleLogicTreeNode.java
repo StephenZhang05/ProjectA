@@ -1,16 +1,20 @@
 package com.Zjj.domain.strategy.service.rule.tree.impl;
 
 import com.Zjj.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
+import com.Zjj.domain.strategy.repository.IStrategyRepository;
 import com.Zjj.domain.strategy.service.rule.tree.ILogicTreeNode;
 import com.Zjj.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component("rule_lock")
 public class RuleLogicTreeNode implements ILogicTreeNode {
+    @Resource
+    private IStrategyRepository repository;
 
-    private Long userRaffleCount = 10L; // 假设这是从某个数据源获取的用户抽奖次数
+
     @Override
     public DefaultTreeFactory.TreeActionEntity logic(String userId, Long strategyId, Integer awardId, String ruleValue) {
         log.info("规则过滤-次数锁 userId:{} strategyId:{} awardId:{}", userId, strategyId, awardId);
@@ -21,14 +25,17 @@ public class RuleLogicTreeNode implements ILogicTreeNode {
         } catch (Exception e) {
             throw new RuntimeException("规则过滤-次数锁异常 ruleValue: " + ruleValue + " 配置不正确");
         }
+// 查询用户抽奖次数 - 当天的；策略ID:活动ID 1:1 的配置，可以直接用 strategyId 查询。
+        Integer userRaffleCount = repository.queryTodayUserRaffleCount(userId, strategyId);
 
         // 用户抽奖次数大于规则限定值，规则放行
         if (userRaffleCount >= raffleCount) {
+            log.info("规则过滤-次数锁【放行】 userId:{} strategyId:{} awardId:{} raffleCount:{} userRaffleCount:{}", userId, strategyId, awardId, userRaffleCount, userRaffleCount);
             return DefaultTreeFactory.TreeActionEntity.builder()
                     .ruleLogicCheckType(RuleLogicCheckTypeVO.ALLOW)
                     .build();
         }
-
+        log.info("规则过滤-次数锁【拦截】 userId:{} strategyId:{} awardId:{} raffleCount:{} userRaffleCount:{}", userId, strategyId, awardId, userRaffleCount, userRaffleCount);
         // 用户抽奖次数小于规则限定值，规则拦截
         return DefaultTreeFactory.TreeActionEntity.builder()
                 .ruleLogicCheckType(RuleLogicCheckTypeVO.TAKE_OVER)
