@@ -2,7 +2,8 @@ package com.Zjj.domain.activity.service;
 
 import com.Zjj.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 
-public interface ISkuStock {
+public interface IRaffleActivitySkuStockService {
+
     /**
      * 获取活动sku库存消耗队列
      *
@@ -29,5 +30,6 @@ public interface ISkuStock {
      * @param sku 活动商品
      */
     void clearActivitySkuStock(Long sku);
+
 
 }

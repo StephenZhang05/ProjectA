@@ -4,7 +4,6 @@ import com.Zjj.domain.activity.model.aggregate.CreatePartakeOrderAggregate;
 import com.Zjj.domain.activity.model.entity.*;
 import com.Zjj.domain.activity.model.valobj.UserRaffleOrderStateVO;
 import com.Zjj.domain.activity.repository.IActivityRepository;
-import com.Zjj.domain.activity.service.IRaffleActivityPartakeService;
 import com.Zjj.types.enums.ResponseCode;
 import com.Zjj.types.exception.AppException;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -92,6 +91,7 @@ public class RaffleActivityPartakeService extends AbstractRaffleActivityPartake 
         userRaffleOrder.setStrategyId(activityEntity.getStrategyId());
         userRaffleOrder.setOrderId(RandomStringUtils.randomNumeric(12));
         userRaffleOrder.setOrderTime(currentDate);
+        userRaffleOrder.setEndDateTime(activityEntity.getEndDateTime());
         userRaffleOrder.setOrderState(UserRaffleOrderStateVO.create);
         return userRaffleOrder;
     }

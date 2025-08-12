@@ -9,6 +9,8 @@ import com.Zjj.domain.strategy.service.strategy.IStrategyDispatch;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 //库存管理规则节点，将库存条件也视为一种规则
 @Component("rule_stock")
 public class RuleStockLogicTreeNode implements ILogicTreeNode {
@@ -19,7 +21,7 @@ public class RuleStockLogicTreeNode implements ILogicTreeNode {
     @Override
     public DefaultTreeFactory.TreeActionEntity logic(String userId, Long strategyId, Integer awardId, String ruleValue) {
         //扣减库存
-        Boolean status=strategyDispatch.subStock(strategyId,awardId);
+        Boolean status=strategyDispatch.subStock(strategyId,awardId,new Date());
         if(status){
             //将扣减库存消息发入延迟队列
             strategyRepository.sendQueue(StrategyAwardStockKeyVO.

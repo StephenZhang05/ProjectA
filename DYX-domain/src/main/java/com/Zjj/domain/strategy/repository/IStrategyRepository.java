@@ -8,6 +8,7 @@ import com.Zjj.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 import com.Zjj.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -43,11 +44,11 @@ public interface IStrategyRepository {
 
     void cacheStrategyAwardCount(String strategyAwardCountKey, Integer awardCount);
 
-    Boolean subStock(String cacheKey);
+    Boolean subStock(String cacheKey,Date endDateTime);
 
     void sendQueue(StrategyAwardStockKeyVO build);
 
-    StrategyAwardStockKeyVO takeQueueValue();
+    StrategyAwardStockKeyVO takeQueueValue() throws InterruptedException;
 
     void updateStrategyAwardStock(Long strategyId, Integer awardId);
 
@@ -68,5 +69,12 @@ public interface IStrategyRepository {
      * @return 用户今日参与次数
      */
     Integer queryTodayUserRaffleCount(String userId, Long strategyId);
+    /**
+     * 根据规则树ID集合查询奖品中加锁数量的配置「部分奖品需要抽奖N次解锁」
+     *
+     * @param treeIds 规则树ID值
+     * @return key 规则树，value rule_lock 加锁值
+     */
+    Map<String, Integer> queryAwardRuleLockCount(String[] treeIds);
 
 }

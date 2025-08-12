@@ -1,5 +1,7 @@
 package com.Zjj.domain.strategy.service.strategy;
 
+import java.util.Date;
+
 public interface IStrategyDispatch {
     /**
      * 获取抽奖策略装配的随机结果
@@ -20,5 +22,5 @@ public interface IStrategyDispatch {
     /**
      * 库存扣减操作
      */
-    Boolean subStock(Long strategyId, Integer awardId);
+    Boolean subStock(Long strategyId, Integer awardId, Date endDateTime);
 }

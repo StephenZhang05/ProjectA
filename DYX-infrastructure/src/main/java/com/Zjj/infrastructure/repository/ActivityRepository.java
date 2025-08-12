@@ -75,6 +75,16 @@ public class ActivityRepository implements IActivityRepository {
                 .stockCountSurplus(cacheSkuStock.intValue())
                 .build();
     }
+    @Override
+    public Integer queryRaffleActivityAccountDayPartakeCount(Long activityId, String userId) {
+        RaffleActivityAccountDay raffleActivityAccountDay = new RaffleActivityAccountDay();
+        raffleActivityAccountDay.setActivityId(activityId);
+        raffleActivityAccountDay.setUserId(userId);
+        raffleActivityAccountDay.setDay(raffleActivityAccountDay.currentDay());
+        Integer dayPartakeCount = raffleActivityAccountDayDao.queryRaffleActivityAccountDayPartakeCount(raffleActivityAccountDay);
+        // 当日未参与抽奖则为0次
+        return null == dayPartakeCount ? 0 : dayPartakeCount;
+    }
 
     @Override
     public ActivityEntity queryRaffleActivityByActivityId(Long activityId) {
@@ -127,7 +137,7 @@ public class ActivityRepository implements IActivityRepository {
             raffleActivityOrder.setActivityName(activityOrderEntity.getActivityName());
             raffleActivityOrder.setStrategyId(activityOrderEntity.getStrategyId());
             raffleActivityOrder.setOrderId(activityOrderEntity.getOrderId());
-            raffleActivityOrder.setOrderTime(activityOrderEntity.getOrderTime());
+            raffleActivityOrder.setOrderTime((java.sql.Date) activityOrderEntity.getOrderTime());
             raffleActivityOrder.setTotalCount(activityOrderEntity.getTotalCount());
             raffleActivityOrder.setDayCount(activityOrderEntity.getDayCount());
             raffleActivityOrder.setMonthCount(activityOrderEntity.getMonthCount());

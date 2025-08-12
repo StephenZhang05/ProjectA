@@ -3,6 +3,7 @@ package com.Zjj.infrastructure.persistence.dao;
 import cn.bugstack.middleware.db.router.annotation.DBRouter;
 import cn.bugstack.middleware.db.router.annotation.DBRouterStrategy;
 import com.Zjj.infrastructure.persistence.po.RaffleActivityAccount;
+import com.Zjj.infrastructure.persistence.po.RaffleActivityAccountDay;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -17,6 +18,8 @@ public interface IRaffleActivityAccountDao {
     RaffleActivityAccount queryActivityAccountByUserId(RaffleActivityAccount raffleActivityAccountReq);
 
     int updateActivityAccountSubtractionQuota(RaffleActivityAccount raffleActivityAccount);
+    @DBRouter
+    Integer queryRaffleActivityAccountDayPartakeCount(RaffleActivityAccountDay raffleActivityAccountDay);
 
     int updateActivityAccountMonthSubtractionQuota(RaffleActivityAccount raffleActivityAccount);
 

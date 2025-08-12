@@ -141,9 +141,9 @@ public class StrategyArmoryDispatch implements IStrategyAmory, IStrategyDispatch
     }
 
     @Override
-    public Boolean subStock(Long strategyId, Integer awardId) {
+    public Boolean subStock(Long strategyId, Integer awardId,Date endDateTime) {
         String cacheKey=Constants.RedisKey.STRATEGY_AWARD_COUNT_KEY+ Constants.UNDERLINE + strategyId + Constants.UNDERLINE + awardId;
-        return repository.subStock(cacheKey);
+        return repository.subStock(cacheKey, endDateTime);
     }
     @Override
     public boolean assembleLotteryStrategyByActivityId(Long activityId) {

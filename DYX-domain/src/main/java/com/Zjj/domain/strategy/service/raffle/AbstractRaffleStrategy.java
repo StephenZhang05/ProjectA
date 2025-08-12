@@ -4,6 +4,7 @@ import com.Zjj.domain.strategy.model.entity.RaffleAwardEntity;
 import com.Zjj.domain.strategy.model.entity.RaffleFactorEntity;
 import com.Zjj.domain.strategy.model.entity.StrategyAwardEntity;
 import com.Zjj.domain.strategy.repository.IStrategyRepository;
+import com.Zjj.domain.strategy.service.IRaffleRule;
 import com.Zjj.domain.strategy.service.IRaffleStock;
 import com.Zjj.domain.strategy.service.IRaffleStrategy;
 import com.Zjj.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
@@ -14,6 +15,8 @@ import com.Zjj.types.exception.AppException;
 import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Date;
+
 /**
  * 提供抽奖策略与抽奖流程的核心类，外部接口调用这个类实现抽奖
  * 通过工厂调用规则树，责任链等，完成抽奖的计算和过滤
@@ -21,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 
-public abstract class  AbstractRaffleStrategy implements IRaffleStrategy, IRaffleStock {
+public abstract class  AbstractRaffleStrategy implements IRaffleStrategy, IRaffleStock, IRaffleRule {
     // 策略仓储服务 -> domain层像一个大厨，仓储层提供米面粮油
     protected IStrategyRepository repository;
     // 策略调度服务 -> 只负责抽奖处理，通过新增接口的方式，隔离职责，不需要使用方关心或者调用抽奖的初始化
@@ -57,7 +60,7 @@ public abstract class  AbstractRaffleStrategy implements IRaffleStrategy, IRaffl
         }
 
         // 3. 规则树抽奖过滤【奖品ID，会根据抽奖次数判断、库存判断、兜底兜里返回最终的可获得奖品信息】
-        DefaultTreeFactory.StrategyAwardVO treeStrategyAwardVO = raffleLogicTree(userId, strategyId, chainStrategyAwardVO.getAwardId());
+        DefaultTreeFactory.StrategyAwardVO treeStrategyAwardVO = raffleLogicTree(userId, strategyId, chainStrategyAwardVO.getAwardId(), raffleFactorEntity.getEndDateTime());
         log.info("抽奖策略计算-规则树 {} {} {} {}", userId, strategyId, treeStrategyAwardVO.getAwardId(), treeStrategyAwardVO.getAwardRuleValue());
 
         // 4. 返回抽奖结果
@@ -92,6 +95,16 @@ public abstract class  AbstractRaffleStrategy implements IRaffleStrategy, IRaffl
      * @return 过滤结果【奖品ID，会根据抽奖次数判断、库存判断、兜底兜里返回最终的可获得奖品信息】
      */
     public abstract DefaultTreeFactory.StrategyAwardVO raffleLogicTree(String userId, Long strategyId, Integer awardId);
+    /**
+     * 抽奖结果过滤，决策树抽象方法
+     *
+     * @param userId      用户ID
+     * @param strategyId  策略ID
+     * @param awardId     奖品ID
+     * @param endDateTime 活动结束时间 - 用于设定缓存有效期
+     * @return 过滤结果【奖品ID，会根据抽奖次数判断、库存判断、兜底兜里返回最终的可获得奖品信息】
+     */
+    public abstract DefaultTreeFactory.StrategyAwardVO raffleLogicTree(String userId, Long strategyId, Integer awardId, Date endDateTime);
 
 
 }

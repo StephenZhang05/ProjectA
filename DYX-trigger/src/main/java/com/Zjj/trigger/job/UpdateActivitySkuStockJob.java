@@ -1,7 +1,7 @@
 package com.Zjj.trigger.job;
 
 import com.Zjj.domain.activity.model.valobj.ActivitySkuStockKeyVO;
-import com.Zjj.domain.activity.service.ISkuStock;
+import com.Zjj.domain.activity.service.IRaffleActivitySkuStockService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UpdateActivitySkuStockJob {
     @Resource
-    private ISkuStock skuStock;
+    private IRaffleActivitySkuStockService skuStock;
 
     @Scheduled(cron = "0/5 * * * * ?")
     public void exec() {

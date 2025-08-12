@@ -5,15 +5,15 @@ import com.Zjj.domain.activity.model.entity.*;
 import com.Zjj.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 import com.Zjj.domain.activity.model.valobj.OrderStateVO;
 import com.Zjj.domain.activity.repository.IActivityRepository;
-import com.Zjj.domain.activity.service.ISkuStock;
+import com.Zjj.domain.activity.service.IRaffleActivitySkuStockService;
 import com.Zjj.domain.activity.service.quota.rule.factory.DefaultActivityChainFactory;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.Date;
 
 
-public class RaffleActivityService extends AbstractRaffleActivity implements ISkuStock {
-    public RaffleActivityService(IActivityRepository activityRepository, DefaultActivityChainFactory defaultActivityChainFactory) {
+public class RaffleActivityAccountQuotaService extends AbstractRaffleActivityAccountQuota implements IRaffleActivitySkuStockService {
+    public RaffleActivityAccountQuotaService(IActivityRepository activityRepository, DefaultActivityChainFactory defaultActivityChainFactory) {
         super(activityRepository, defaultActivityChainFactory);
     }
 
@@ -28,7 +28,7 @@ public class RaffleActivityService extends AbstractRaffleActivity implements ISk
         activityOrderEntity.setStrategyId(activityEntity.getStrategyId());
         // 公司里一般会有专门的雪花算法UUID服务，我们这里直接生成个12位就可以了。
         activityOrderEntity.setOrderId(RandomStringUtils.randomNumeric(12));
-        activityOrderEntity.setOrderTime((java.sql.Date) new Date());
+        activityOrderEntity.setOrderTime(new Date());
         activityOrderEntity.setTotalCount(activityCountEntity.getTotalCount());
         activityOrderEntity.setDayCount(activityCountEntity.getDayCount());
         activityOrderEntity.setMonthCount(activityCountEntity.getMonthCount());
@@ -47,9 +47,10 @@ public class RaffleActivityService extends AbstractRaffleActivity implements ISk
     }
 
     @Override
-    protected void doSaveOrder(CreateQuotaOrderAggregate createQuotaOrderAggregate) {
-        activityRepository.doSaveOrder(createQuotaOrderAggregate);
+    protected void doSaveOrder(CreateQuotaOrderAggregate createOrderAggregate) {
+        activityRepository.doSaveOrder(createOrderAggregate);
     }
+
     @Override
     public ActivitySkuStockKeyVO takeQueueValue() throws InterruptedException {
         return activityRepository.takeQueueValue();
@@ -69,5 +70,11 @@ public class RaffleActivityService extends AbstractRaffleActivity implements ISk
     public void clearActivitySkuStock(Long sku) {
         activityRepository.clearActivitySkuStock(sku);
     }
+
+    @Override
+    public Integer queryRaffleActivityAccountDayPartakeCount(Long activityId, String userId) {
+        return activityRepository.queryRaffleActivityAccountDayPartakeCount(activityId, userId);
+    }
+
 
 }

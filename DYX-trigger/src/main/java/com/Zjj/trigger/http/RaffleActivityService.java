@@ -19,14 +19,14 @@ import com.Zjj.types.model.Response;
 import io.micrometer.common.util.StringUtils;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
 @Slf4j
+@RestController()
+@CrossOrigin("${app.config.cross-origin}")
+@RequestMapping("/api/${app.config.api-version}/raffle/activity/")
 public class RaffleActivityService implements IRaffleActivityService {
     @Resource
     private IRaffleActivityPartakeService raffleActivityPartakeService;
@@ -109,6 +109,7 @@ public class RaffleActivityService implements IRaffleActivityService {
             RaffleAwardEntity raffleAwardEntity = raffleStrategy.performRaffle(RaffleFactorEntity.builder()
                     .userId(orderEntity.getUserId())
                     .strategyId(orderEntity.getStrategyId())
+                    .endDateTime(orderEntity.getEndDateTime())
                     .build());
             // 4. 存放结果 - 写入中奖记录
             UserAwardRecordEntity userAwardRecord = UserAwardRecordEntity.builder()

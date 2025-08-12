@@ -33,7 +33,7 @@ public interface IActivityRepository {
 
     void clearActivitySkuStock(Long sku);
 
-
+    Integer queryRaffleActivityAccountDayPartakeCount(Long activityId, String userId);
     UserRaffleOrderEntity queryNoUsedRaffleOrder(PartakeRaffleActivityEntity partakeRaffleActivityEntity);
 
     void saveCreatePartakeOrderAggregate(CreatePartakeOrderAggregate createPartakeOrderAggregate);
