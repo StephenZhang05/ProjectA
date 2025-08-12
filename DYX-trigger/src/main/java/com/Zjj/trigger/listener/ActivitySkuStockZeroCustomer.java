@@ -1,5 +1,6 @@
 package com.Zjj.trigger.listener;
 
+import com.Zjj.domain.activity.service.IRaffleActivitySkuStockService;
 import com.Zjj.types.event.BaseEvent;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
